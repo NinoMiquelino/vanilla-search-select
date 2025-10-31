@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Select Avançado - Funcional</title>
+    <meta name="author" content="Onivaldo Miquelino">  
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Custom styles para melhor aparência */
+        .search-select-dropdown {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .dark .search-select-dropdown {
+            border-color: #4b5563;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        }
+        
+        /* Animações suaves */
+        .fade-in {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen p-4 md:p-8 transition-colors duration-200">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            🔍 Search Select Avançado
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 text-lg">
+                Componente totalmente funcional com busca em tempo real
+            </p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="space-y-8">
+            <!-- Demo Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 transition-colors duration-200">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+                🧩  Demonstração do Componente
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Single Select -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                 Selecione um país (Busca):
+                            </label>
+                            <div id="countrySelect"></div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                 Selecione uma cidade (Sem busca):
+                            </label>
+                            <div id="citySelect"></div>
+                        </div>
+                    </div>
+
+                    <!-- Multiple Select -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                 Selecione múltiplas tecnologias:
+                            </label>
+                            <div id="techSelect"></div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                 Selecione até 3 categorias:
+                            </label>
+                            <div id="categorySelect"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selected Values Display -->
+                <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Valores Selecionados:
+                    </h3>
+                    <div id="selectedValues" class="space-y-3">
+                        <div class="text-center py-8">
+                            <svg class="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="text-gray-500 dark:text-gray-400">Nenhum item selecionado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+                ⚙️ Características do Componente
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-3">
+                            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Busca em Tempo Real</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Busque instantaneamente entre as opções disponíveis</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <div class="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-3">
+                            <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Seleção Múltipla</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Suporte a seleção única ou múltipla de itens</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <div class="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-3">
+                            <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Totalmente Responsivo</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Funciona perfeitamente em mobile e desktop</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center">
+            <p class="text-gray-500 dark:text-gray-400 text-sm">
+                Componente Search Select desenvolvido com técnicas avançadas de segurança
+            </p>
+        </footer>
+    </div>
+
+    <!-- Script do Componente -->
+    <script>
+        // Versão simplificada e testada do Search Select
+        class SearchSelect {
+            constructor(config) {
+                this.config = {
+                    container: '',
+                    options: [],
+                    placeholder: 'Selecione...',
+                    searchable: true,
+                    multiple: false,
+                    maxSelections: null,
+                    onSelect: () => {},
+                    ...config
+                };
+
+                this.selectedOptions = [];
+                this.isOpen = false;
+                this.searchTerm = '';
+                
+                this.init();
+            }
+
+            init() {
+                this.createDOM();
+                this.bindEvents();
+                this.renderOptions();
+            }
+
+            createDOM() {
+                const container = typeof this.config.container === 'string' 
+                    ? document.querySelector(this.config.container) 
+                    : this.config.container;
+
+                if (!container) {
+                    console.error('Container não encontrado:', this.config.container);
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="relative w-full">
+                        <!-- Trigger Button -->
+                        <div class="search-select-trigger 
+                            w-full px-4 py-3 
+                            border-2 border-gray-200 dark:border-gray-600 
+                            rounded-xl 
+                            bg-white dark:bg-gray-700 
+                            text-gray-900 dark:text-white 
+                            cursor-pointer 
+                            flex items-center justify-between
+                            transition-all duration-200
+                            hover:border-gray-300 dark:hover:border-gray-500
+                            shadow-sm">
+                            
+                            <div class="selected-text flex flex-wrap gap-2 flex-1 min-w-0 mr-3">
+                                <span class="text-gray-500 dark:text-gray-400 text-sm">
+                                    ${this.config.placeholder}
+                                </span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2 flex-shrink-0">
+                                ${this.config.searchable ? `
+                                    <div class="search-icon w-4 h-4 text-gray-400">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        </svg>
+                                    </div>
+                                ` : ''}
+                                
+                                <div class="chevron w-4 h-4 text-gray-400 transform transition-transform duration-200">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown -->
+                        <div class="search-select-dropdown 
+                            absolute top-full left-0 right-0 z-50 mt-2 
+                            bg-white dark:bg-gray-700 
+                            border-2 border-gray-200 dark:border-gray-600 
+                            rounded-xl shadow-xl 
+                            max-h-80 overflow-hidden
+                            transform origin-top
+                            transition-all duration-200
+                            scale-95 opacity-0 pointer-events-none
+                            fade-in">
+                            
+                            ${this.config.searchable ? `
+                                <div class="search-input-container p-3 border-b border-gray-100 dark:border-gray-600 bg-gray-50 dark:bg-gray-600 rounded-t-xl">
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            class="search-input w-full pl-10 pr-4 py-3
+                                                   border border-gray-300 dark:border-gray-500 
+                                                   rounded-lg
+                                                   bg-white dark:bg-gray-700 
+                                                   text-gray-900 dark:text-white 
+                                                   placeholder-gray-500 dark:placeholder-gray-400
+                                                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                                                   text-sm transition-all duration-200"
+                                            placeholder="Digite para buscar..."
+                                            autocomplete="off"
+                                        >
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <div class="options-container max-h-60 overflow-y-auto py-2">
+                                <!-- Options will be rendered here -->
+                            </div>
+                            
+                            ${this.config.multiple ? `
+                                <div class="footer-actions p-3 border-t border-gray-100 dark:border-gray-600 bg-gray-50 dark:bg-gray-600 rounded-b-xl">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">
+                                            ${this.selectedOptions.length} selecionados
+                                        </span>
+                                        <div class="flex space-x-2">
+                                            <button class="clear-all-btn px-3 py-2 text-xs text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200" type="button">
+                                                Limpar
+                                            </button>
+                                            <button class="select-all-btn px-3 py-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200" type="button">
+                                                Selecionar Todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+                this.elements = {
+                    trigger: container.querySelector('.search-select-trigger'),
+                    dropdown: container.querySelector('.search-select-dropdown'),
+                    searchInput: container.querySelector('.search-input'),
+                    optionsContainer: container.querySelector('.options-container'),
+                    selectedText: container.querySelector('.selected-text'),
+                    chevron: container.querySelector('.chevron'),
+                    selectAllBtn: container.querySelector('.select-all-btn'),
+                    clearAllBtn: container.querySelector('.clear-all-btn')
+                };
+            }
+
+            bindEvents() {
+                // Toggle dropdown
+                this.elements.trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.toggleDropdown();
+                });
+
+                // Search input
+                if (this.config.searchable && this.elements.searchInput) {
+                    this.elements.searchInput.addEventListener('input', (e) => {
+                        this.searchTerm = e.target.value;
+                        this.renderOptions();
+                    });
+
+                    this.elements.searchInput.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
+
+                // Select all button
+                if (this.config.multiple && this.elements.selectAllBtn) {
+                    this.elements.selectAllBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.selectAll();
+                    });
+                }
+
+                // Clear all button
+                if (this.config.multiple && this.elements.clearAllBtn) {
+                    this.elements.clearAllBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.clear();
+                    });
+                }
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', () => {
+                    this.closeDropdown();
+                });
+
+                // Prevent dropdown close when clicking inside
+                this.elements.dropdown.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            toggleDropdown() {
+                if (this.isOpen) {
+                    this.closeDropdown();
+                } else {
+                    this.openDropdown();
+                }
+            }
+
+            openDropdown() {
+                this.isOpen = true;
+                this.elements.dropdown.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                this.elements.dropdown.classList.add('scale-100', 'opacity-100');
+                this.elements.chevron.classList.add('rotate-180');
+                this.elements.trigger.classList.add('border-blue-500', 'ring-2', 'ring-blue-200');
+                
+                if (this.config.searchable && this.elements.searchInput) {
+                    setTimeout(() => this.elements.searchInput.focus(), 100);
+                }
+
+                this.renderOptions();
+            }
+
+            closeDropdown() {
+                this.isOpen = false;
+                this.elements.dropdown.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                this.elements.dropdown.classList.remove('scale-100', 'opacity-100');
+                this.elements.chevron.classList.remove('rotate-180');
+                this.elements.trigger.classList.remove('border-blue-500', 'ring-2', 'ring-blue-200');
+                
+                if (this.config.searchable && this.elements.searchInput) {
+                    this.elements.searchInput.value = '';
+                    this.searchTerm = '';
+                }
+            }
+
+            renderOptions() {
+                const filteredOptions = this.filterOptions();
+                
+                if (filteredOptions.length === 0) {
+                    this.elements.optionsContainer.innerHTML = `
+                        <div class="flex flex-col items-center justify-center py-8 px-4">
+                            <svg class="w-12 h-12 text-gray-300 dark:text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 text-center">Nenhum resultado encontrado</p>
+                            ${this.searchTerm ? '<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Tente buscar com outros termos</p>' : ''}
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.elements.optionsContainer.innerHTML = filteredOptions.map(option => `
+                    <div class="option-item 
+                        px-4 py-3
+                        cursor-pointer 
+                        transition-all duration-150
+                        ${this.isSelected(option) ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-50 dark:hover:bg-gray-600'}
+                        border-b border-gray-100 dark:border-gray-600 last:border-b-0
+                        group"
+                        data-value="${option.value}">
+                        
+                        <div class="flex items-center space-x-3">
+                            ${this.config.multiple ? `
+                                <div class="checkbox 
+                                    w-5 h-5 
+                                    border-2 ${this.isSelected(option) ? 'border-blue-500 bg-blue-500' : 'border-gray-300 dark:border-gray-500'} 
+                                    rounded 
+                                    flex items-center justify-center
+                                    transition-all duration-200">
+                                    ${this.isSelected(option) ? `
+                                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    ` : ''}
+                                </div>
+                            ` : `
+                                <div class="radio 
+                                    w-5 h-5 
+                                    border-2 ${this.isSelected(option) ? 'border-blue-500' : 'border-gray-300 dark:border-gray-500'} 
+                                    rounded-full 
+                                    flex items-center justify-center
+                                    transition-all duration-200">
+                                    ${this.isSelected(option) ? `
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                    ` : ''}
+                                </div>
+                            `}
+                            
+                            <span class="option-label flex-1 text-sm font-medium">
+                                ${option.emoji ? `<span class="text-base mr-2">${option.emoji}</span>` : ''}
+                                ${option.label}
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add click events to options
+                this.elements.optionsContainer.querySelectorAll('.option-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const value = item.getAttribute('data-value');
+                        const option = this.config.options.find(opt => opt.value === value);
+                        
+                        if (option) {
+                            this.toggleOption(option);
+                        }
+                    });
+                });
+            }
+
+            filterOptions() {
+                if (!this.searchTerm) {
+                    return this.config.options;
+                }
+
+                const term = this.searchTerm.toLowerCase();
+                return this.config.options.filter(option =>
+                    option.label.toLowerCase().includes(term) ||
+                    (option.emoji && option.emoji.toLowerCase().includes(term))
+                );
+            }
+
+            toggleOption(option) {
+                if (this.config.multiple) {
+                    const existingIndex = this.selectedOptions.findIndex(opt => opt.value === option.value);
+                    
+                    if (existingIndex > -1) {
+                        this.selectedOptions.splice(existingIndex, 1);
+                    } else {
+                        if (this.config.maxSelections && this.selectedOptions.length >= this.config.maxSelections) {
+                            this.showNotification(`Máximo de ${this.config.maxSelections} seleções permitidas`);
+                            return;
+                        }
+                        this.selectedOptions.push(option);
+                    }
+                } else {
+                    this.selectedOptions = [option];
+                    this.closeDropdown();
+                }
+
+                this.updateDisplay();
+                this.renderOptions();
+                this.config.onSelect(this.selectedOptions);
+            }
+
+            selectAll() {
+                if (!this.config.multiple) return;
+
+                const visibleOptions = this.filterOptions();
+                this.selectedOptions = [...new Set([...this.selectedOptions, ...visibleOptions])];
+                
+                if (this.config.maxSelections && this.selectedOptions.length > this.config.maxSelections) {
+                    this.selectedOptions = this.selectedOptions.slice(0, this.config.maxSelections);
+                    this.showNotification(`Máximo de ${this.config.maxSelections} seleções permitidas`);
+                }
+
+                this.updateDisplay();
+                this.renderOptions();
+                this.config.onSelect(this.selectedOptions);
+            }
+
+            isSelected(option) {
+                return this.selectedOptions.some(selected => selected.value === option.value);
+            }
+
+            updateDisplay() {
+                if (this.selectedOptions.length === 0) {
+                    this.elements.selectedText.innerHTML = `
+                        <span class="text-gray-500 dark:text-gray-400 text-sm">${this.config.placeholder}</span>
+                    `;
+                    return;
+                }
+
+                if (this.config.multiple) {
+                    const selectedLabels = this.selectedOptions.map(opt => opt.label);
+                    const displayText = selectedLabels.length > 2 
+                        ? `${selectedLabels.slice(0, 2).join(', ')} +${selectedLabels.length - 2} mais`
+                        : selectedLabels.join(', ');
+                    
+                    this.elements.selectedText.innerHTML = `
+                        <span class="text-gray-900 dark:text-white text-sm font-medium">${displayText}</span>
+                    `;
+                } else {
+                    const selected = this.selectedOptions[0];
+                    this.elements.selectedText.innerHTML = `
+                        <span class="text-gray-900 dark:text-white text-sm font-medium">
+                            ${selected.emoji ? selected.emoji + ' ' : ''}${selected.label}
+                        </span>
+                    `;
+                }
+
+                // Update footer counter
+                if (this.elements.clearAllBtn) {
+                    const counter = this.elements.dropdown.querySelector('.text-xs');
+                    if (counter) {
+                        counter.textContent = `${this.selectedOptions.length} selecionados`;
+                    }
+                }
+            }
+
+            clear() {
+                this.selectedOptions = [];
+                this.updateDisplay();
+                this.renderOptions();
+                this.config.onSelect(this.selectedOptions);
+            }
+
+            showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg z-50';
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+
+            // Public methods
+            getSelected() {
+                return [...this.selectedOptions];
+            }
+
+            setSelected(values) {
+                if (!Array.isArray(values)) values = [values];
+                this.selectedOptions = this.config.options.filter(opt => values.includes(opt.value));
+                this.updateDisplay();
+                this.renderOptions();
+            }
+        }             
+
+        // Dados de exemplo
+        const countries = [
+            { value: 'br', label: 'Brasil', emoji: '🇧🇷' },
+            { value: 'us', label: 'Estados Unidos', emoji: '🇺🇸' },
+            { value: 'ca', label: 'Canadá', emoji: '🇨🇦' },
+            { value: 'gb', label: 'Reino Unido', emoji: '🇬🇧' },
+            { value: 'de', label: 'Alemanha', emoji: '🇩🇪' },
+            { value: 'fr', label: 'França', emoji: '🇫🇷' },
+            { value: 'jp', label: 'Japão', emoji: '🇯🇵' },
+            { value: 'au', label: 'Austrália', emoji: '🇦🇺' }
+        ];
+
+        const cities = [
+            { value: 'sao-paulo', label: 'São Paulo' },
+            { value: 'rio-de-janeiro', label: 'Rio de Janeiro' },
+            { value: 'belo-horizonte', label: 'Belo Horizonte' },
+            { value: 'brasilia', label: 'Brasília' },
+            { value: 'salvador', label: 'Salvador' }
+        ];
+
+        const technologies = [
+            { value: 'javascript', label: 'JavaScript' },
+            { value: 'typescript', label: 'TypeScript' },
+            { value: 'python', label: 'Python' },
+            { value: 'java', label: 'Java' },
+            { value: 'csharp', label: 'C#' },
+            { value: 'php', label: 'PHP' },
+            { value: 'ruby', label: 'Ruby' },
+            { value: 'go', label: 'Go' }
+        ];
+
+        const categories = [
+            { value: 'frontend', label: 'Frontend Development' },
+            { value: 'backend', label: 'Backend Development' },
+            { value: 'mobile', label: 'Mobile Development' },
+            { value: 'devops', label: 'DevOps' },
+            { value: 'ai', label: 'Artificial Intelligence' },
+            { value: 'data-science', label: 'Data Science' }
+        ];
+
+        // Inicializar componentes quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', function() {
+            let countrySelect, citySelect, techSelect, categorySelect;
+
+            try {
+                // Country Select (Single with search)
+                countrySelect = new SearchSelect({
+                    container: '#countrySelect',
+                    options: countries,
+                    placeholder: 'Selecione um país...',
+                    searchable: true,
+                    multiple: false,
+                    onSelect: updateSelectedValues
+                });
+
+                // City Select (Single without search)
+                citySelect = new SearchSelect({
+                    container: '#citySelect',
+                    options: cities,
+                    placeholder: 'Selecione uma cidade...',
+                    searchable: false,
+                    multiple: false,
+                    onSelect: updateSelectedValues
+                });
+
+                // Tech Select (Multiple with search)
+                techSelect = new SearchSelect({
+                    container: '#techSelect',
+                    options: technologies,
+                    placeholder: 'Selecione tecnologias...',
+                    searchable: true,
+                    multiple: true,
+                    onSelect: updateSelectedValues
+                });
+
+                // Category Select (Multiple with max selections)
+                categorySelect = new SearchSelect({
+                    container: '#categorySelect',
+                    options: categories,
+                    placeholder: 'Selecione até 3 categorias...',
+                    searchable: true,
+                    multiple: true,
+                    maxSelections: 3,
+                    onSelect: updateSelectedValues
+                });
+
+                console.log(' Todos os componentes foram inicializados com sucesso!');
+            } catch (error) {
+                console.error(' Erro ao inicializar componentes:', error);
+            }
+
+            function updateSelectedValues() {
+                const selectedValuesDiv = document.getElementById('selectedValues');
+                const allSelections = [
+                    { label: 'País', values: countrySelect ? countrySelect.getSelected() : [] },
+                    { label: 'Cidade', values: citySelect ? citySelect.getSelected() : [] },
+                    { label: 'Tecnologias', values: techSelect ? techSelect.getSelected() : [] },
+                    { label: 'Categorias', values: categorySelect ? categorySelect.getSelected() : [] }
+                ];
+
+                const hasSelections = allSelections.some(item => item.values.length > 0);
+
+                if (!hasSelections) {
+                    selectedValuesDiv.innerHTML = `
+                        <div class="text-center py-8">
+                            <svg class="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="text-gray-500 dark:text-gray-400">Nenhum item selecionado</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                selectedValuesDiv.innerHTML = allSelections
+                    .filter(item => item.values.length > 0)
+                    .map(item => `
+                        <div class="bg-white dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                                <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                ${item.label}
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${item.values.map(val => `
+                                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                        ${val.emoji || ''}
+                                        ${val.label}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('');
+            }
+
+            // Exemplo de como usar os métodos públicos
+            window.demoSelects = {
+                countrySelect,
+                citySelect,
+                techSelect,
+                categorySelect,
+                setExampleSelection: function() {
+                    countrySelect.setSelected('br');
+                    citySelect.setSelected('sao-paulo');
+                    techSelect.setSelected(['javascript', 'typescript']);
+                    categorySelect.setSelected(['frontend', 'backend']);
+                    updateSelectedValues();
+                },
+                clearAll: function() {
+                    countrySelect.clear();
+                    citySelect.clear();
+                    techSelect.clear();
+                    categorySelect.clear();
+                    updateSelectedValues();
+                }
+            };
+        });
+
+        // Botões de exemplo para demonstrar funcionalidades
+        document.addEventListener('DOMContentLoaded', function() {
+            const demoControls = document.createElement('div');
+            demoControls.className = 'fixed bottom-4 right-4 flex space-x-2 z-40';
+            demoControls.innerHTML = `
+                <button onclick="window.demoSelects.setExampleSelection()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-lg transition-colors duration-200 text-sm font-medium">
+                     Exemplo
+                </button>
+                <button onclick="window.demoSelects.clearAll()" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg shadow-lg transition-colors duration-200 text-sm font-medium">
+                     Limpar
+                </button>
+            `;
+            document.body.appendChild(demoControls);
+        });
+    </script>
+</body>
+</html>    
