@@ -191,24 +191,24 @@ Funciona automaticamente com as classes dark do Tailwind:
 
 Comportamento por Dispositivo:
 
-· Mobile: Dropdown em tela cheia, toque otimizado
-· Tablet: Layout adaptativo
+· Mobile: Dropdown em tela cheia, toque otimizado<br>
+· Tablet: Layout adaptativo<br>
 · Desktop: Experiência completa com animações
 
 Touch-Friendly:
 
-· Áreas de toque grandes (mínimo 44px)
-· Scroll suave em dispositivos móveis
+· Áreas de toque grandes (mínimo 44px)<br>
+· Scroll suave em dispositivos móveis<br>
 · Feedback visual para interações touch
 
 🔧 Uso em Produção
 
 Pronto para Produção:
 
-· ✅ Testado e Funcional
-· ✅ Código Limpo
-· ✅ Sem Dependências
-· ✅ Performance Otimizada
+· ✅ Testado e Funcional<br>
+· ✅ Código Limpo<br>
+· ✅ Sem Dependências<br>
+· ✅ Performance Otimizada<br>
 · ✅ Fácil Manutenção
 
 Exemplo de Implementação Real:
@@ -233,13 +233,13 @@ Problemas Comuns:
 
 O componente não aparece:
 
-· Verifique se o container existe no DOM
-· Confirme se o JavaScript está carregado
+· Verifique se o container existe no DOM<br>
+· Confirme se o JavaScript está carregado<br>
 · Verifique o console por erros
 
 A busca não funciona:
 
-· Certifique-se que searchable: true
+· Certifique-se que searchable: true<br>
 · Verifique se há opções para filtrar
 
 Seleção múltipla não funciona:
